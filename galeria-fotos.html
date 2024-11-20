@@ -1,83 +1,116 @@
 <!-- España Cervantes Anthony Alexander 
  DESARROLLO DE APLICACIONES WEB
  Actividad 4  Unidad 2 -->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galería de Fotos</title>
-    <!-- Importar Tailwind CSS desde un CDN -->
+    <!-- Importar Tailwind CSS desde un CDN para usar sus clases utilitarias -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans p-5">
-    <!-- Encabezado -->
+    <!-- Clase 'bg-gray-100' para el fondo gris claro
+         Clase 'font-sans' para usar una fuente sans-serif
+         Clase 'p-5' para agregar padding alrededor del cuerpo -->
+
+    <!-- Encabezado de la página -->
     <header class="text-center mb-10">
-        <h1 class="text-4xl font-bold text-gray-800">Galería de Fotos</h1>
-        <p class="text-lg text-gray-600 mt-2">Explora imágenes impresionantes seleccionadas aleatoriamente</p>
+        <!-- Clase 'text-center' centra el texto horizontalmente
+             Clase 'mb-10' agrega margen inferior -->
+        <h1 class="text-4xl font-bold text-gray-800">
+            <!-- Clase 'text-4xl' define el tamaño del texto
+                 Clase 'font-bold' hace el texto negrita
+                 Clase 'text-gray-800' define un color gris oscuro -->
+            Galería de Fotos
+        </h1>
+        <p class="text-lg text-gray-600 mt-2">
+            <!-- Clase 'text-lg' define tamaño de texto más grande
+                 Clase 'text-gray-600' aplica un color gris claro
+                 Clase 'mt-2' agrega un margen superior -->
+            Explora imágenes impresionantes seleccionadas aleatoriamente
+        </p>
     </header>
 
-    <!-- Contenedor de la galería con grid -->
+    <!-- Contenedor principal de la galería con grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="gallery">
+        <!-- Clase 'grid' define un contenedor tipo cuadrícula
+             Clase 'grid-cols-1' establece una columna como predeterminada
+             Clases 'sm:grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4' cambian el número de columnas en pantallas más grandes
+             Clase 'gap-6' agrega un espacio uniforme entre elementos -->
         <!-- Las imágenes se generarán dinámicamente con JavaScript -->
     </div>
 
-    <!-- Modal (ventana emergente) -->
+    <!-- Modal (ventana emergente para ver imágenes en detalle) -->
     <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <!-- Clase 'fixed' posiciona el modal de manera fija en la pantalla
+             Clase 'inset-0' asegura que ocupe todo el viewport
+             Clase 'bg-black bg-opacity-50' crea un fondo negro semitransparente
+             Clase 'flex items-center justify-center' centra el contenido del modal -->
         <div class="relative bg-white p-4 rounded-lg shadow-lg">
+            <!-- Clase 'relative' posiciona este contenedor dentro del modal
+                 Clase 'bg-white' define un fondo blanco
+                 Clase 'p-4' agrega padding interno
+                 Clase 'rounded-lg' aplica bordes redondeados
+                 Clase 'shadow-lg' agrega una sombra al contenedor -->
             <button id="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
+                <!-- Clase 'absolute' posiciona el botón en una ubicación específica
+                     Clases 'top-2' y 'right-2' posicionan el botón cerca de la esquina superior derecha
+                     Clase 'text-gray-500' aplica un color gris al texto
+                     Clase 'hover:text-gray-800' cambia el color al pasar el mouse -->
                 ✖
             </button>
             <img id="modalImage" src="" alt="Imagen Ampliada" class="rounded-lg">
+            <!-- Clase 'rounded-lg' redondea los bordes de la imagen -->
         </div>
     </div>
 
-    <!-- Script para generar imágenes y manejar el modal -->
+    <!-- Script para generar las imágenes y manejar el modal -->
     <script>
-        const gallery = document.getElementById('gallery'); // Contenedor de la galería
-        const modal = document.getElementById('modal'); // Modal
-        const modalImage = document.getElementById('modalImage'); // Imagen dentro del modal
-        const closeModal = document.getElementById('closeModal'); // Botón de cerrar modal
+        const gallery = document.getElementById('gallery'); // Selecciona el contenedor de la galería
+        const modal = document.getElementById('modal'); // Selecciona el modal
+        const modalImage = document.getElementById('modalImage'); // Selecciona la imagen dentro del modal
+        const closeModal = document.getElementById('closeModal'); // Selecciona el botón de cierre del modal
 
-        const totalImages = 20; // Número total de imágenes
+        const totalImages = 20; // Número total de imágenes a generar
 
-        // Generar imágenes dinámicamente
+        // Bucle para generar tarjetas dinámicamente
         for (let i = 1; i <= totalImages; i++) {
-            const card = document.createElement('div'); // Crear tarjeta
+            const card = document.createElement('div'); // Crear un div para cada tarjeta
             card.className = "bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300";
 
-            const img = document.createElement('img'); // Imagen
-            img.src = `https://picsum.photos/200?random=${Math.random()}`;
-            img.alt = `Imagen ${i}`;
+            const img = document.createElement('img'); // Crear elemento img
+            img.src = `https://picsum.photos/200?random=${Math.random()}`; // Generar imagen aleatoria
+            img.alt = `Imagen ${i}`; // Texto alternativo
             img.className = "w-full cursor-pointer";
-            
-            const caption = document.createElement('p'); // Título debajo de la imagen
+
+            const caption = document.createElement('p'); // Crear texto descriptivo
             caption.textContent = `Imagen ${i}`;
             caption.className = "text-center text-gray-700 p-2";
 
-            // Agregar evento para abrir el modal al hacer clic en la imagen
-            img.addEventListener('click', () => {
-                modalImage.src = img.src; // Asignar la imagen al modal
-                modal.classList.remove('hidden'); // Mostrar el modal
-            });
+        // Agregar evento para abrir el modal al hacer clic en la imagen
+        img.addEventListener('click', () => {
+            modalImage.src = img.src; // Asignar la imagen al modal
+            modal.classList.remove('hidden'); // Mostrar el modal
+        });
 
-            card.appendChild(img); // Añadir imagen a la tarjeta
-            card.appendChild(caption); // Añadir título a la tarjeta
-            gallery.appendChild(card); // Añadir tarjeta a la galería
-        }
+        card.appendChild(img); // Añadir imagen a la tarjeta
+        card.appendChild(caption); // Añadir título a la tarjeta
+        gallery.appendChild(card); // Añadir tarjeta a la galería
+    }
 
-        // Evento para cerrar el modal
-        closeModal.addEventListener('click', () => {
+    // Evento para cerrar el modal
+    closeModal.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    // Cerrar modal si se hace clic fuera de la imagen
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
             modal.classList.add('hidden');
-        });
-
-        // Cerrar modal si se hace clic fuera de la imagen
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.add('hidden');
-            }
-        });
+        }
+    });
     </script>
 </body>
 </html>
